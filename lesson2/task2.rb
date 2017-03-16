@@ -2,7 +2,7 @@
 my_array =[]
 index = 10
 while index <=100 do 
-	my_array.push(index)
-	index+=5
+  my_array << index
+  index+=5
 end
-print my_array
+print "#{my_array} \n"

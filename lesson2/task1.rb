@@ -16,4 +16,4 @@ year = {"Январь"=> 31,
 "Ноябрь" => 30,
 "Декабрь" => 31}
 
-year.each {|month, count_days| puts "#{month} содержит 30 дней" if count_days==30}
+year.each {|month, days| puts "#{month} содержит 30 дней" if days==30}

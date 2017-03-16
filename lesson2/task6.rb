@@ -11,23 +11,23 @@ list = Hash.new(nil)
 total = 0
 
 loop do
-	print "Введите название товара - "
-	product = gets.chomp
-	break if product == "стоп"
-	print "Введите цену за единицу - "
-	price = gets.chomp.to_f
-	print "Введите количество купленного товара (#{product}) -  "
-	count_product = gets.chomp.to_f
+  print "Введите название товара - "
+  product = gets.chomp
+  break if product == "стоп"
+  print "Введите цену за единицу - "
+  price = gets.chomp.to_f
+  print "Введите количество купленного товара (#{product}) -  "
+  count_product = gets.chomp.to_f
 
-	total_price_product = price*count_product
+  total_price_product = price*count_product
 #заполняем хэш
 
-	list[product] = {
+  list[product] = {
     price: price,
     count: count_product,
     price_product: total_price_product
-  	}
-  	total += total_price_product
+    }
+    total += total_price_product
 end
 puts list
 puts "\n"
