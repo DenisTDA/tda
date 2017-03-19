@@ -11,25 +11,18 @@
 
 
 class Route 
-  @@routes = 0
-  def initialize(start_st, end_st)
-    @@routes+= 1
-    @stations=[start_st, end_st]
+  attr_reader :stations
+
+  def initialize(start_station, end_station)
+    @stations=[start_station, end_station]
   end
-#добовляем промежуточные станции
-  def get_st (name)
+
+  def insert_station(name)
     @stations.insert(-2, name)
   end
 
-#удаление станции из маршрута
-  def del_st (name)
-    puts "Станция #{name} удалена из маршрута" if @stations.delete(name)!= nil
-    return name
-  end
-#вывод списка всех станций по порядку
-  def print_st
-    print "Полный маршрут: "
-    @stations.each_index { |i| print " #{@stations[i]} " } 
-    puts ""   
+  def del_station(name)
+    if @stations.delete(name)
+    end
   end
 end

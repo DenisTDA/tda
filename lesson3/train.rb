@@ -16,91 +16,69 @@
 class Train
   @@count_tr=0
   attr_accessor :station, :speed, :route 
-  attr_reader :cars
+  attr_reader :carriages
 
-  def initialize(num, type, cars=0)
-    @num, @type, @cars = num, type, cars
+  def initialize(num, type, carriages=0)
+    @num, @type, @carriages = num, type, carriages
     @@count_tr+= 1
     @speed = 0.0
     @route = []
-    @station = ""
+    @station = 0
   end
 
-# увеличить скорость
-  def incr_sp (incr)
-    @speed+=incr
-    return @speed    
+
+  def increase_speed(increment)
+    @speed+=increment
   end
 
-#Уменьшить скорость
-  def decr_sp (decr)
-    if self.speed >=decr 
-      @speed-= decr
-      else
+
+  def decrease_speed(decr)
+    if @speed >=decr 
+      self.speed= @speed - decr
+    else
       self.speed = 0
     end
-    return @speed
   end
 
-#проверка стоит/едет
-  def status_speed
-    if self.speed >0 
-      puts "Состав в движении"
-      return true
-    else
-      return false
-    end
+  def carriage_add
+    @carriages+= 1 if @speed == 0
   end
 
-#добавление вагона к составу
-  def car_add
-    @cars+= 1 if !status_speed
+  def carriage_del
+    @carriages-= 1 if @speed == 0 && self.carriages!=0
   end
 
-#удаление вагона из состава
-  def car_del
-    @cars-= 1 if !status_speed && self.cars!=0
-  end
-
-#получает маршрут, устанавливает скорость в нуль и помещаем состав на начальную станцию
-  def set_route (route)
+  def set_route(route)
     self.route = route.stations
     self.speed = 0
-    self.station = @route[0]
+    self.station = 0
   end
 
-#на 1 станцию вперед
-  def move_f
-    if @station != @route.last
-      index_c = @route.index(@station)
-      self.station = @route[index_c+1]
+  def current_station
+    @route[@station]
+  end
+
+  def move_forward
+    if @station+1 != @route.length
+      self.station = @station + 1
     else
-      puts "Конечная станция!"
       return self.station
     end
   end
 
-#вернутся на 1 станцию
-  def move_b
-    if @station != @route.first
-      index_c = @route.index(@station)
-      self.station = @route[index_c-1]
+  def move_back
+    if @station != 0
+      self.station = @station - 1
     else
-      puts "Начальная станция!"
+      return self.station
     end
   end
 
-#возвращать предыдущую станцию
-  def last_st
-    index_c = @route.index(@station)
-    last_st = @route[index_c-1]
-    return last_st
+  def previus_station
+    @route[self.station - 1]
   end
 
-#взвращать следующую станцию
-  def next_st
-    index_c = @route.index(@station)
-    next_st = @route[index_c+1]
-    return next_st
+  def next_station
+    @route[self.station + 1]
   end
 end

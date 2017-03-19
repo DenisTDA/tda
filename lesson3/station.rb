@@ -11,30 +11,24 @@
 
 class Station
   attr_accessor :name
-  @@stations=[]
+  attr_reader :trains
+
   def initialize(name)
     @name = name
-    @@stations << name
     @trains = {}
   end
-#Принять поезд на станцию
-  def get_tr (num, type)
-    @trains [num]= type
-    puts "Поезд #{num} #{type} добавлен" 
+
+  def take_train(num, type)
+    @trains[num]= type
   end
-#вывод списка всех поездов на станции
-  def list_tr
-    @trains.each {|num, type| puts "Номер поезда:\t#{num}\t ||\tтип состава:\t#{type} "}
-  end
-#выводе списка поездов по типу (грузовой/пассажирский)
-  def type_tr (type_tr)
+
+  def trains_by_type(type_filter)
     count=0
-    @trains.each_value {|type| count+= 1 if type == type_tr}
-    puts "Количество составов - #{count} : Тип - #{type_tr}"
+    @trains.each_value {|type| count+= 1 if type == type_filter}
+    return count
   end
-#отправка поезда
-  def send_tr (num)
+
+  def send_train(num)
     @trains.delete(num) 
-    puts "Поезд #{num} отправлен"
   end
 end
