@@ -22,8 +22,8 @@ class Station
     @trains << train
   end
 
-  def trains_by_type(type_filter)
-    @trains.count {|train| train.type == type_filter}
+  def trains_by_type(type)
+    @trains.count {|train| train.type == type}
   end
 
   def send_train(train)

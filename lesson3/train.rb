@@ -15,22 +15,23 @@
 
 class Train
  
-  attr_accessor :speed 
-  attr_reader :carriages, :station, :route, :type 
+  attr_accessor :speed, :station_index, :route
+  attr_reader :carriages, :type 
 
   def initialize(num, type, carriages=0)
     @num, @type, @carriages = num, type, carriages
+    @speed = 0
   end
 
 
   def increase_speed(increment)
-    @speed+=increment
+    @speed += increment
   end
 
 
   def decrease_speed(decr)
     if @speed >=decr 
-      self.speed= @speed - decr
+      @speed -= decr
     else
       self.speed = 0
     end
@@ -41,46 +42,45 @@ class Train
   end
 
   def carriage_del
-    @carriages-= 1 if @speed == 0 && @carriages!=0
+    @carriages-= 1 if @speed == 0 && @carriages>0
   end
 
   def set_route(route)
     self.route = route
     self.speed = 0
-    self.station = 0
+    self.station_index = 0
+    @route.stations[0].take_train(self)
   end
 
   def current_station
-    if self.route 
-      @route.stations[station].name
-    end
+    @route.stations[station_index] if self.route 
   end
 
   def move_forward
-    if @station+1 != @route.stations.length
-      @route.stations[@station].send_train(self)
-      self.station = @station + 1
-      @route.stations[@station].take_train(self)
+    if @route.stations.length > @station_index+1
+      current_station.send_train(self)
+      @station_index += 1
+      current_station.take_train(self)
     else
-      return @station
+      return @station_index
     end
   end
 
   def move_back
-    if @station != 0
-      @route.stations[@station].send_train(self)
-      self.station = @station - 1
-      @route.stations[@station].take_train(self)
+    if @station_index > 0
+      current_station.send_train(self)
+      @station_index -= 1
+      current_station.take_train(self)
     else
-      return station
+      return @station_index
     end
   end
 
   def previus_station
-    @route.stations[@station - 1]
+    @route.stations[@station_index - 1] if station_index>0
   end
 
   def next_station
-    @route.stations[@station + 1]
+    @route.stations[@station_index + 1] if @route.stations.length > @station_index + 1
   end
 end
