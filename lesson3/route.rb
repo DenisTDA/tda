@@ -9,7 +9,6 @@
   
 =end
 
-
 class Route 
   attr_reader :stations
 
@@ -17,12 +16,12 @@ class Route
     @stations=[start_station, end_station]
   end
 
-  def insert_station(name)
-    @stations.insert(-2, name)
+  def insert_station(station)
+    @stations.insert(-2, station)
   end
 
-  def del_station(name)
-    if @stations.delete(name)
+  def del_station(station)
+    if @stations.delete(station)
     end
   end
 end

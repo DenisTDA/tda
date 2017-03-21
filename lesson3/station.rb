@@ -15,20 +15,18 @@ class Station
 
   def initialize(name)
     @name = name
-    @trains = {}
+    @trains = []
   end
 
-  def take_train(num, type)
-    @trains[num]= type
+  def take_train(train)
+    @trains << train
   end
 
   def trains_by_type(type_filter)
-    count=0
-    @trains.each_value {|type| count+= 1 if type == type_filter}
-    return count
+    @trains.count {|train| train.type == type_filter}
   end
 
-  def send_train(num)
-    @trains.delete(num) 
+  def send_train(train)
+    @trains.delete(train) 
   end
 end
