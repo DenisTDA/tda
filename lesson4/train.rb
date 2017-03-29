@@ -14,15 +14,12 @@
 =end  
 
 class Train
-#  @@namber_of_train
-  attr_reader :carriages, :type, :route, :speed, :num 
+  attr_reader :carriages,  :route, :speed, :num 
 
   def initialize(num)
     @num = num
     @speed = 0
     @carriages = []
-    set_type
-#    count_trains
   end
 
 
@@ -40,7 +37,7 @@ class Train
   end
 
   def carriage_add(car)
-    @carriages << car if stoped? && validate?(car)
+    @carriages << car if stoped?
   end
 
   def carriage_del
@@ -91,12 +88,6 @@ class Train
   attr_accessor :station_index
   attr_writer :route, :speed
 
-#  def count_trains
-#   @@namber_of_train++1    
-# end
-
-  def set_type
-  end
 
   def not_empty?
     @carriages.length>0
@@ -124,9 +115,5 @@ class Train
 
   def pevius!
     @station_index - 1
-  end
-
-  def validate?(car)
-    @type == car.type
   end
 end
