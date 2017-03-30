@@ -10,8 +10,8 @@
 =end
 
 class Station
-  attr_accessor :name
-  attr_reader :trains
+#  attr_accessor 
+  attr_reader :trains,:name
 
   def initialize(name)
     @name = name

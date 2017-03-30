@@ -2,7 +2,7 @@
 #который будет содержать общие методы и свойства
 class PassengerTrain < Train
 
-  def carriage_add(car=PassengerCarriage.new)
-    super
+  def type_validation?(carriage)
+    carriage.class == PassengerCarriage
   end
 end

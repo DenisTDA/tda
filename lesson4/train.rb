@@ -37,7 +37,7 @@ class Train
   end
 
   def carriage_add(car)
-    @carriages << car if stoped?
+    @carriages << car if stoped? && type_validation?(car)
   end
 
   def carriage_del
@@ -88,6 +88,9 @@ class Train
   attr_accessor :station_index
   attr_writer :route, :speed
 
+
+  def type_validation?(carriage)
+  end
 
   def not_empty?
     @carriages.length>0

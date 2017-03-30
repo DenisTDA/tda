@@ -19,11 +19,11 @@ class RailWay
       system('clear')
     when "4"
       puts "Выбирете маршрут для редактирования."
-      if !print_routes  
-        pause
-        return false
-      end
-      index_route = gets.chomp.to_i - 1 until key_check(index_route, @main_routes)
+      pause unless print_routes  
+      begin 
+        print "> "
+        index_route = gets.chomp.to_i - 1 
+      end until key_check(index_route, @main_routes)
       add_station (@main_routes[index_route])
       system('clear')      
     when "5"
@@ -104,7 +104,7 @@ def print_main_menu
     loop do
       print_quit
       puts "Создаем новый маршрут."
-      if !print_stations
+      unless print_stations
         pause
         return false 
       end
@@ -131,7 +131,7 @@ def print_main_menu
 
   def move_train
     puts "Кокой поезд хотите перемещать?"
-    if !print_trains
+    unless print_trains
       pause
       return false 
     end    
@@ -152,7 +152,7 @@ def print_main_menu
   end
 
   def list_stations
-    if !print_stations
+    unless print_stations
       pause
       return false 
     end    
@@ -169,28 +169,25 @@ def print_main_menu
   end
 
   def add_station(route)
-    arr_numbers = []
     print_stations 
     print_route(route)
     print  "Введите через ',' номера станций, которые хотите добавить в маршрут, учитывая последовательность ввода:"
-    arr_numbers = gets.chomp.split(',')
-    arr_numbers.map! {|x| x.to_i}
-    arr_numbers.each {|index| 
+    arr_numbers = gets.chomp.split(',').map(&:to_i)
+    arr_numbers.each do |index| 
       index-=1
       if key_check(index, @main_stations)
         route.insert_station(@main_stations[index]) 
       else
         mistake
-        return false
       end
-    }
+    end
     puts "Результирующий маршрут:"
     print_route(route)
     pause
   end
 
   def add_route
-    if !print_trains
+    unless print_trains
       pause
       return false
     end
@@ -198,7 +195,7 @@ def print_main_menu
       print "Введите поезд (1 - #{@main_trains.length}):"
       index_train = gets.chomp.to_i - 1
     end until key_check(index_train, @main_trains)
-    return false if !print_routes 
+    return false unless print_routes 
     begin
       print "Введите номер маршрута (1 - #{@main_routes.length}):"  
       index_route = gets.chomp.to_i - 1
@@ -211,7 +208,7 @@ def print_main_menu
 
   def add_carriage
     puts "Для добавления или удаления вагонов необходимо выбрать поезд"
-    if !print_trains
+    unless print_trains
       pause
       return false
     end
@@ -226,11 +223,15 @@ def print_main_menu
       count_cars = gets.chomp.to_i
       count_cars.times { @main_trains[index_train].carriage_add(CargoCarriage.new) } if @main_trains[index_train].class == CargoTrain
       count_cars.times { @main_trains[index_train].carriage_add(PassengerCarriage.new) } if @main_trains[index_train].class == PassengerTrain
+      puts "Текущее количество вагонов в составе: #{@main_trains[index_train].carriages.length}"      
+      pause
     elsif choice == '2'
       puts "Текущее количество вагонов в составе: #{@main_trains[index_train].carriages.length}"
       print "Сколько вагонов необходимо удалить? : "  
       count_cars = gets.chomp.to_i
       count_cars.times { |i| @main_trains[index_train].carriage_del } 
+      puts "Текущее количество вагонов в составе: #{@main_trains[index_train].carriages.length}"      
+      pause
     else
       puts "Вы сделали не правильный выбор! Повторите."
       pause
@@ -243,16 +244,11 @@ def print_main_menu
       @main_stations.each.with_index(1) {|station, index| puts "#{index} -- #{station.name}"}
     else
       list_empty
-      return false
     end
   end
 
-  def print_route(route)                                                                                                                                                                                                                                
-    route.stations.each {|station| 
-      print station.name
-      print " --> " if station != route.stations.last
-    } 
-    puts''
+  def print_route(route) 
+    puts route.stations.map(&:name).join(' --> ')                                                                                                                                                                                                                               
   end
 
   def print_trains
@@ -261,7 +257,6 @@ def print_main_menu
       @main_trains.each.with_index(1) {|train, index| puts "#{index} -- #{train.num}"}
     else
       list_empty
-      return false
     end
   end
 
@@ -274,7 +269,6 @@ def print_main_menu
       end
     else
       list_empty
-      return false
     end
   end  
 
@@ -291,17 +285,15 @@ def print_main_menu
     gets
   end
 
-  def key_check (key, max_volume)
+  def key_check(key, max_volume)
     if (0...max_volume.size).include?(key) 
       return true 
     else
       puts "Наверно Вы ошиблись с набором... попробуйте еще раз!"
-      return false
     end 
   end
 
   def mistake
     puts "Вы сделали не правильный выбор! Повторите.\n"
-    return false
   end
 end

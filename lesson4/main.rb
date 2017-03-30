@@ -15,5 +15,5 @@ loop do
   railway.print_main_menu
   choice = gets.chomp 
   break if choice == '0'
-  railway.do_main_menu (choice)
+  railway.do_main_menu(choice)
 end
