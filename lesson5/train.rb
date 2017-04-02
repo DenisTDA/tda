@@ -19,9 +19,12 @@
   и возвращает объект поезда по номеру или nil, если поезд с таким номером не найден.
 =end  
 require_relative 'manufacturer.rb'
+require_relative 'instance_counter.rb'
 
 class Train
   include Manufacturer
+  include InstanceCounter
+
   @@all_trains = {}
 
   attr_reader :carriages,  :route, :speed, :num 
@@ -31,6 +34,7 @@ class Train
     @speed = 0
     @carriages = []
     @@all_trains[num] = self
+    register_instance
   end
 
   def self.find(number_train)

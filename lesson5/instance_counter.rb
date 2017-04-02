@@ -18,11 +18,8 @@ module InstanceCounter
   module InstanceMethods
     protected
     def register_instance
-      unless self.class.instances == nil
-        self.class.instances += 1
-      else
-        self.class.instances = 0 
-      end
+      self.class.instances ||= 0
+      self.class.instances += 1
     end
   end
 end
