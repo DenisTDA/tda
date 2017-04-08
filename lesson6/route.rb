@@ -13,23 +13,31 @@ class Route
   attr_reader :stations
 
   def initialize(start_station, end_station)
-    raise if start_station == end_station
+    raise "Stations must be defferent!" if start_station == end_station
     @stations=[start_station, end_station]
-  rescue RuntimeError => e
-    p "Stations must be different!"
+    validate!
   end
 
   def insert_station(station)
     raise if station == @stations.last || station == @stations[-2]
     @stations.insert(-2, station)
-  rescue RuntimeError => e
-    p "Invalid station insert #{station.name}!"    
   end
 
   def del_station(station)
     raise if @stations.size <3 || !@stations.include?(station)
     @stations.delete(station)
-  rescue RuntimeError => e
-    p "Error deleting station!"    
+  end
+
+  def valid?
+    validate!
+  rescue => e
+    puts e.massege
+    false
+  end
+
+  private
+  def validate!
+    raise "Error! Type is not valid!" unless @stations.all? { |station| station.is_a?(Station) }
+    true
   end
 end
