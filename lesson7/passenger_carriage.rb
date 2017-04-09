@@ -22,7 +22,6 @@ class PassengerCarriage
   end
 
   def loading(load_capacity)
-    load_capacity = load_capacity.to_i
     if @capacity_free >= load_capacity.to_i 
       @capacity_free -= load_capacity.to_i
       @capacity_loaded += load_capacity.to_i

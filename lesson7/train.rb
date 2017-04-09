@@ -125,8 +125,8 @@ class Train
     false
   end
 
-   def do_with_carriages(&block)
-    @carriages.each{ |train| yield(train)}
+   def each_carriage(&block)
+    @carriages.each{ |carriage| yield(carriage)}
   end
 
 
@@ -146,7 +146,7 @@ class Train
   end
 
   def not_empty?
-    @carriages.length>0
+    @carriages.length > 0
   end
 
   def stoped?
@@ -154,11 +154,11 @@ class Train
   end
 
   def not_last?
-    @route.stations.length > @station_index+1
+    @route.stations.length > @station_index + 1
   end
 
   def not_first?
-    station_index>0
+    station_index > 0
   end
 
   def next!

@@ -23,10 +23,9 @@ class CargoCarriage
   end
 
   def loading(load_capacity)
-    load_capacity = load_capacity.to_f
     if @capacity_free >= load_capacity 
-      @capacity_free-= load_capacity
-      @capacity_loaded+= load_capacity
+      @capacity_free -= load_capacity
+      @capacity_loaded += load_capacity
     else 
       puts "Overload! Operation abort!"
     end

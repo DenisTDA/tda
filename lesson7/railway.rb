@@ -172,25 +172,24 @@ def print_main_menu
     end
     pause
   end
+  
 
   def list_stations
-    list_stations?
+    return if list_stations?
     begin
       print "Для просмотра поездов на станции выбирете нужный номер станции:"
       choice = gets.chomp.to_i - 1 
     end until key_check(choice, @main_stations)
-    if @main_stations[choice].trains.length<1
+    if @main_stations[choice].trains.length < 1
       puts "На станции - #{@main_stations[choice].name} нет поездов.\n\n" 
     else
       puts "На станции - #{@main_stations[choice].name} находятся поезда:" 
-      # @main_stations[choice].trains.each{|train| puts "#{train.num}\t#{'-'*5}\t#{train.class}#{'-'*5}\t#{train.carriages.length}"}
-      @main_stations[choice].trains.each do |train| 
-        puts "#{train.num}\t#{'-'*5}\t#{train.class}#{'-'*5}\t#{train.carriages.length}"
-        print_carriages(train)
+      @main_stations[choice].each_train do |train| 
+        puts "\n№#{train.num}\t#{'-'*5}\tТип: #{train.class}#{'-'*5}\tКол-во вагонов: #{train.carriages.length}\n"
+        print_carriages(train)  
       end
-      pause
     end 
-
+    pause
   rescue => e
     error_message(e)
     pause
@@ -217,7 +216,7 @@ def print_main_menu
   end
 
   def add_route
-    list_trains?
+    return if list_trains?
     begin
       print "Введите поезд (1 - #{@main_trains.length}):"
       index_train = gets.chomp.to_i - 1
@@ -249,13 +248,13 @@ def print_main_menu
       count_cars = gets.chomp.to_i
       if @main_trains[index_train].class == CargoTrain
         count_cars.times do |index| 
-          puts "Введите допустимый объем для вагона №#{index+1}" 
+          puts "Введите допустимый объем для вагона №#{index + 1}" 
           @main_trains[index_train].carriage_add(CargoCarriage.new(gets.chomp))
         end
       end
       if @main_trains[index_train].class == PassengerTrain
         count_cars.times do |index|
-          puts "Введите количество допустимых мест для вагона №#{index+1}" 
+          puts "Введите количество допустимых мест для вагона №#{index + 1}" 
           @main_trains[index_train].carriage_add(PassengerCarriage.new(gets.chomp))  
         end
       end
@@ -284,7 +283,7 @@ def print_main_menu
     print_carriages(train)
     begin
       print "Какой вагон будем заполнять: "  
-      index_carriage = (gets.chomp.to_i) -1 
+      index_carriage = (gets.chomp.to_i) - 1 
       pause
     end until key_check(index_carriage,train.carriages)
     p "after"
@@ -302,7 +301,7 @@ def print_main_menu
   end
 
   def print_carriage (index_carriage, train)
-    puts "Вагон #{index_carriage+1}: всего -#{train.carriages[index_carriage].capacity}; свободно - #{train.carriages[index_carriage].capacity_free} "
+    puts "Вагон #{index_carriage + 1}: всего -#{train.carriages[index_carriage].capacity}; свободно - #{train.carriages[index_carriage].capacity_free} "
   end
 
   def print_train_route_station (index_train)
@@ -355,7 +354,7 @@ def print_main_menu
     puts "№№ \t занятые единицы\t свободные единицы"
     puts "#{'_'*70}"
     index = 1
-    train.carriages.each do |carriage| 
+    train.each_carriage do |carriage| 
       puts "#{index}\t| \t\t #{carriage.capacity_loaded}\t| \t\t #{carriage.capacity_free}\t|"
       index += 1
     end

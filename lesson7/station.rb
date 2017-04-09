@@ -54,7 +54,7 @@ class Station
     false
   end
 
-  def do_with_trains(&block)
+  def each_train(&block)
     @trains.each{ |train| block.call(train)}
   end
 
