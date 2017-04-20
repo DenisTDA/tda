@@ -1,5 +1,7 @@
 # Task 8
 # Class Route
+require_relative "validation.rb"
+
 
 class Route
   attr_reader :stations

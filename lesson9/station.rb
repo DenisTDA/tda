@@ -7,7 +7,6 @@ class Station
   include InstanceCounter
 
   NAME_FORMAT = /^([a-z|\d]){3,25}$/i
-  LENGTH_NAME = 3
 
   attr_reader :trains, :name
   @@all_stations = []
@@ -50,7 +49,7 @@ class Station
   private
 
   def validate_name!
-    raise 'FormatError!!! FORMAT ==>[a-z0-9]==> X{3,15}' if @name !~ NAME_FORMAT
+    raise 'FormatError! FORMAT ==>[a-z0-9]==> X{3,15}' if @name !~ NAME_FORMAT
     true
   end
 end

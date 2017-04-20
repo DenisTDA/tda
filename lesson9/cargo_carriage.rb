@@ -3,14 +3,15 @@
 
 class CargoCarriage
   include Manufacturer
+  include Validation
 
   attr_reader :capacity, :capacity_free, :capacity_loaded
 
   def initialize(capacity)
     @capacity = capacity.to_f
-    validate!
     @capacity_free = @capacity
     @capacity_loaded = 0
+    validate!
   end
 
   def loading(load_capacity)

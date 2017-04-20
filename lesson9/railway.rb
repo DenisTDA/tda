@@ -302,7 +302,7 @@ class RailWay
     print_carriage(index_carriage, train)
     pause
   rescue => e
-    error_message(e)
+    error_message(e.message)
     pause
   end
 
@@ -320,7 +320,7 @@ class RailWay
     carriage = train.carriages[index_carriage]
     puts "\nВагон #{index_carriage + 1}: всего - "\
     "#{carriage.capacity}; свободно - #{carriage.capacity_free};"\
-    ' занято - #carriage.capacity_loaded}'
+    " занято - #{carriage.capacity_loaded}"
   end
 
   def print_train_route_station(index_train)

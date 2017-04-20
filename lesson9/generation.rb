@@ -9,10 +9,12 @@ module Generation
       @main_stations[-(index + 1)]) 
     }
     5.times { |index| @main_trains[index].route_set(@main_routes[index]) }
+
     2.times do |index| 
       10.times { @main_trains[index].carriage_add(CargoCarriage.new(rand(100..1000))) }
     end
-    for index in 2..4 do 
+
+    for index in 2..4 do
       10.times { @main_trains[index].carriage_add(PassengerCarriage.new(rand(10..60))) }
     end
     puts "\nData has been generated!\nPress Enter"

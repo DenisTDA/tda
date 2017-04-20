@@ -2,21 +2,16 @@
 # Train class
 
 require_relative 'instance_counter.rb'
-require_relative 'validation.rb'
+
 
 class Train
   include Manufacturer
   include InstanceCounter
-  include Validation
 
   @@all_trains = {}
-  
   NUM_FORMAT = /^(\d|[a-z]){3}-?(\d|[a-z]){2}$/i
 
   attr_reader :carriages, :route, :speed, :num
-  validate :num, :format, NUM_FORMAT
-  validate :num, :presence
-
 
   def initialize(num)
     @num = num
@@ -24,7 +19,6 @@ class Train
     # validate_num!
     @speed = 0
     @carriages = []
-    validate!
     @@all_trains[num] = self
   end
 

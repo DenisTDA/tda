@@ -3,20 +3,20 @@
 
 class PassengerCarriage
   include Manufacturer
-
+ 
   attr_reader :capacity, :capacity_free, :capacity_loaded
 
   def initialize(capacity)
     @capacity = capacity.to_i
-    validate!
     @capacity_free = @capacity
     @capacity_loaded = 0
+    validate!
   end
 
   def loading(load_capacity)
-    if @capacity_free >= load_capacity.to_i
-      @capacity_free -= load_capacity.to_i
-      @capacity_loaded += load_capacity.to_i
+    if @capacity_free >= load_capacity
+      @capacity_free -= load_capacity
+      @capacity_loaded += load_capacity
     else
       puts 'Overload! Operation abort!'
     end
