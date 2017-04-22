@@ -5,19 +5,22 @@ require_relative 'instance_counter.rb'
 
 class Station
   include InstanceCounter
+  include Validation
 
   NAME_FORMAT = /^([a-z|\d]){3,25}$/i
 
-  attr_reader :trains, :name
   @@all_stations = []
 
   def self.all
     @@all_stations
   end
 
+  attr_reader :trains, :name
+  validate :name, :format, NAME_FORMAT
+
   def initialize(name)
     @name = name
-    validate_name!
+    validate!
     @trains = []
     @@all_stations << self
     register_instance
@@ -35,21 +38,7 @@ class Station
     @trains.delete(train)
   end
 
-  def valid?(_name)
-    validate_name!
-  rescue => e
-    puts "Error!!! ==> #{e.message}"
-    false
-  end
-
   def each_train
     @trains.each { |train| yield(train) }
-  end
-
-  private
-
-  def validate_name!
-    raise 'FormatError! FORMAT ==>[a-z0-9]==> X{3,15}' if @name !~ NAME_FORMAT
-    true
   end
 end

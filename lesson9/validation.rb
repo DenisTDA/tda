@@ -10,8 +10,6 @@ module Validation
     def validate(attr_name, type_validation, ext_attr = nil)
       @parameters ||= []
       @parameters << { attr_name => { type: type_validation, ext: ext_attr } }
-      # p @parameters
-      # gets
     end
   end
 
@@ -32,16 +30,16 @@ module Validation
       false
     end
 
-    def presence(attr_name, _ext_attr)
-      raise "PresenceError #{attr_name}..." if !attr_name || attr_name.empty?
+    def presence(attr, _ext_attr)
+      raise "PresenceError #{attr}" unless !!attr || attr == 0 || attr == ''
     end
 
-    def format(number, format_number)
-      raise "FormatError #{number}..." if number.to_s !~ format_number
+    def format(attr, format_attr)
+      raise "FormatError #{attr}..." if attr.to_s !~ format_attr
     end
 
-    def type(object, object_type)
-      raise "TypeError #{object}..." unless object.is_a?(object_type)
+    def type(attr, type_attr)
+      raise "TypeError #{attr}..." unless attr.is_a?(type_attr)
     end
   end
 end

@@ -17,15 +17,23 @@ test1.a = 6
 p test1.a
 test1.a = 'test-a'
 p test1.a
-p test1.a_history
-
+puts "history - #{test1.a_history}"
+puts "current value a = #{test1.a}"
+puts 
 test1.b = [2,3,65]
 p test1.b
 test1.b = 6.456
 p test1.b
+test1.b = nil
+p test1.b
+test1.b = {mask: "dark"}
+p test1.b
 test1.b = 'test-b'
 p test1.b
-p test1.b_history
+puts "history - #{test1.b_history}"
+puts "current value b = #{test1.b}"
+
+puts"\ntest of strong_attr_accesor with Array"
 
 test1.m = [3,5,8]
 p test1.m

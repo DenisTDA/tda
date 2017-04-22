@@ -3,8 +3,10 @@
 
 class PassengerCarriage
   include Manufacturer
+  include Validation
  
   attr_reader :capacity, :capacity_free, :capacity_loaded
+  validate :capacity, :presence
 
   def initialize(capacity)
     @capacity = capacity.to_i
@@ -20,11 +22,5 @@ class PassengerCarriage
     else
       puts 'Overload! Operation abort!'
     end
-  end
-
-  private
-
-  def validate!
-    raise 'Data Error!' if @capacity < 0
   end
 end

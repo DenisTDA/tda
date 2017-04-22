@@ -4,19 +4,19 @@
 # mathod strong_attr_acessor
 
 module Accessors
-  def attr_accessor_with_history(*atrs)
-    atrs.each do |name_method|
-      name_var = "@#{name_method}".to_sym
-      define_method(name_method) { instance_variable_get(name_var) }
-
-      define_method("#{name_method}=".to_sym) do |value|
-        instance_variable_set(name_var, value)
-        @values_history ||= {}
-        @values_history [name_method] ||= []
-        @values_history[name_method] << value
+  def attr_accessor_with_history(*attrs)
+    attrs.each do |attr_name|
+      name_var = "@#{attr_name}".to_sym
+      values = []
+      
+      define_method(attr_name) { instance_variable_get(name_var) }
+      define_method("#{attr_name}=".to_sym) do |value|
+        if instance_variable_defined?(name_var)
+          values << instance_variable_get(name_var)
+        end
+        instance_variable_set(name_var, value)        
       end
-
-      define_method("#{name_method}_history") { @values_history[name_method] }
+      define_method("#{attr_name}_history") { values }
     end
   end
 

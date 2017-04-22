@@ -6,6 +6,7 @@ class CargoCarriage
   include Validation
 
   attr_reader :capacity, :capacity_free, :capacity_loaded
+  validate :capacity, :presence
 
   def initialize(capacity)
     @capacity = capacity.to_f
@@ -21,11 +22,5 @@ class CargoCarriage
     else
       puts 'Overload! Operation abort!'
     end
-  end
-
-  private
-
-  def validate!
-    raise 'Data Error!' if @capacity < 0
   end
 end

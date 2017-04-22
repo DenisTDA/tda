@@ -1,13 +1,23 @@
-# Task 8
+# Task 9
 # Class Route
 require_relative "validation.rb"
 
 
 class Route
-  attr_reader :stations
+  include Validation
+
+  attr_reader :stations, :end_station, :start_station
+
+  validate :start_station, :presence
+  validate :start_station, :presence
+  validate :start_station, :type, Station
+  validate :end_station, :type, Station
+
 
   def initialize(start_station, end_station)
-    @stations = [start_station, end_station]
+    @end_station = end_station
+    @start_station = start_station
+    @stations = [@start_station, @end_station]
     validate!
   end
 
@@ -19,20 +29,5 @@ class Route
   def del_station(station)
     raise if @stations.size < 3 || !@stations.include?(station)
     @stations.delete(station)
-  end
-
-  def valid?
-    validate!
-  rescue => e
-    puts e.massege
-    false
-  end
-
-  private
-
-  def validate!
-    raise 'Stations must be defferent!' if @stations.first == @stations.last
-    raise 'Error! Type is not valid!' unless @stations.all? { |station| station.is_a?(Station) }
-    true
   end
 end
